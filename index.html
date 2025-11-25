@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Voulé — Belleza Minimalista & Sostenible</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root{
+            --bg: #F4F4F4;
+            --primary: #594D48;
+            --dark: #2A2A2A;
+            --accent: #D6B4A1;
+            --secondary-accent: #A89589;
+            --card-shadow: rgba(0,0,0,0.06);
+        }
+
+        /* DE ACA HACIA ABAJO SON ESTILOS */
+        *{box-sizing:border-box}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--dark);
+            -webkit-font-smoothing:antialiased;
+            overflow-x: hidden;
+        }
+        .container { max-width: 1200px; }
+        .accent { color: var(--accent) !important; }
+        .primary-text { color: var(--primary); }
+        .centered { text-align:center; }
+        .section { padding: 48px 0; }
+        html { scroll-behavior: smooth; }
+
+        
+        nav { background: var(--primary); box-shadow: none; }
+        .brand-logo { font-weight:700; letter-spacing:1px; }
+        .nav-wrapper a { transition: color 0.3s ease; }
+        .nav-wrapper a:hover { color: var(--accent) !important; }
+
+        /* AQUI ES LOS COLORES DE BOTONES */
+        .btn-custom {
+            background-color: var(--secondary-accent);
+            color: #fff;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        .btn-custom:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(214, 180, 161, 0.4);
+        }
+        
+        
+        .fixed-action-btn { bottom: 23px; right: 23px; z-index: 998; }
+        .btn-large.fab-btn { background-color: var(--accent) !important; }
+
+        
+        #hero { padding: 36px 0 24px; }
+        .carousel .carousel-item { position: relative; }
+        .carousel .carousel-item img {
+            border-radius: 14px;
+            max-height: 480px;
+            object-fit: cover;
+            filter: brightness(0.9);
+            transition: filter 0.4s ease;
+        }
+        
+        /*  OVERLAY (No TOCAR) */
+        .carousel .carousel-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0); 
+            border-radius: 14px;
+            transition: background 0.4s ease;
+            z-index: 5; 
+        }
+
+         /*  OVERLAY (No TOCAR) */
+        .carousel:hover .carousel-item::before, 
+        .carousel-item.show-overlay::before {
+            background: rgba(0, 0, 0, 0.4); 
+        }
+        .carousel:hover .carousel-item img,
+        .carousel-item.show-overlay img {
+            filter: brightness(0.6);
+        }
+
+        
+        .hero-caption {
+            position: absolute; 
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            color: #fff; 
+            text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+            
+            opacity: 0; 
+            transition: opacity 0.4s ease; 
+            pointer-events: none; 
+            z-index: 10;
+        }
+
+        
+        .carousel:hover .hero-caption, 
+        .carousel .hero-caption.visible-temp {
+            opacity: 1; 
+        }
+
+        /*  Controles del Carrusel (NO TOCAR) */
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 99; 
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--primary) !important;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .carousel-control:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .carousel-control.left { left: 15px; }
+        .carousel-control.right { right: 15px; }
+        .carousel-control i { font-size: 30px; }
+
+        
+        .filter-bar {
+            background: #fff;
+            box-shadow: 0 4px 18px var(--card-shadow);
+            border-radius: 40px;
+            padding: 10px 14px;
+            display:flex;
+            justify-content:center;
+            gap:12px;
+            align-items:center;
+            flex-wrap:wrap;
+            margin: 22px 0 34px;
+        }
+        .filter-btn {
+            border:none; background:transparent; padding:10px 18px;
+            border-radius: 30px; transition: all .3s ease;
+            font-weight:500; color:var(--primary);
+            cursor: pointer;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--secondary-accent);
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        
+        .card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px var(--card-shadow);
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+        .card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 16px 36px rgba(0,0,0,0.18); 
+        }
+
+        .price-badge {
+            position:absolute; top:12px; right:12px;
+            background: rgba(255,255,255,0.95); color:var(--primary);
+            padding:7px 12px; border-radius: 20px; font-weight:600;
+            box-shadow:0 4px 10px rgba(0,0,0,0.1);
+            font-size: 1rem;
+        }
+
+        .card .card-image img {
+            height:230px; width:100%; object-fit:cover;
+            transition: transform 0.4s ease;
+        }
+        .card:hover .card-image img {
+            transform: scale(1.04);
+        }
+        .card .actions-row {
+            padding:10px 14px 18px;
+        }
+        .btn-quick {
+            border-radius: 26px; padding: 6px 12px; min-width:110px; text-transform:none;
+        }
+        
+        
+        footer { background: var(--primary); color:#fff; padding:36px 0; margin-top:36px; }
+        footer a { color: var(--accent); margin: 0 8px; transition: color 0.3s ease; }
+        footer a:hover { color: #fff; }
+
+        /* Animación del Carrito  NOOOO TOCARRRRR*/
+        @keyframes pulse-cart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .pulse-once {
+            animation: pulse-cart 0.3s ease-in-out;
+        }
+
+      
+        .modal-fixed-footer .modal-content {
+            height: calc(100% - 56px); 
+        }
+        .tabs .tab a {
+            color: var(--primary) !important;
+            font-weight: 500;
+        }
+        .tabs .tab a:hover {
+            color: var(--accent) !important;
+        }
+        .tabs .indicator {
+            background-color: var(--accent);
+        }
+        
+      
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--primary); 
+            z-index: 99999; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            opacity: 1;
+            transition: opacity 0.8s ease-out; 
+        }
+        #splash-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300; 
+            font-size: 3.5rem; 
+            letter-spacing: 0.2em; 
+            color: white;
+            opacity: 0; 
+            transform: scale(0.9); 
+            transition: opacity 1s ease-in, transform 1s ease-in; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="splash-screen">
+        <h1 id="splash-text">
+            VOULÉ
+        </h1>
+    </div>
+
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large fab-btn">
+            <i class="large material-icons">menu</i>
+        </a>
+        <ul>
+            <li><a href="#productos" class="btn-floating primary-text tooltipped" data-position="left" data-tooltip="Productos"><i class="material-icons">local_mall</i></a></li>
+            <li><a href="#contacto" class="btn-floating primary-text tooltipped" data-position="left" data-tooltip="Contacto"><i class="material-icons">mail_outline</i></a></li>
+            <li><a href="guia-tecnica.html" target="_blank" class="btn-floating primary-text tooltipped" data-position="left" data-tooltip="Guía Técnica"><i class="material-icons">analytics</i></a></li>
+        </ul>
+    </div>
+    
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="#inicio" class="brand-logo white-text">
+                <span style="font-size:1.25rem">Voul<span class="accent">é</span></span>
+            </a>
+
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="guia-tecnica.html" target="_blank" style="font-weight:600; color:var(--accent);">Guía Técnica</a></li>
+                
+                <li>
+                    <a href="#!" id="profile-btn" class="tooltipped" data-position="bottom" data-tooltip="Mi perfil">
+                        <i class="material-icons white-text">person_outline</i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#!" id="cart-btn" class="tooltipped" data-position="bottom" data-tooltip="Ver carrito">
+                        <i class="material-icons white-text">shopping_cart</i>
+                        <span id="cart-count" class="new badge" data-badge-caption="">0</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul id="mobile-nav" class="sidenav">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+        <li class="divider"></li>
+        <li><a href="guia-tecnica.html" target="_blank" class="primary-text" style="font-weight:600;">Guía Técnica</a></li>
+        <li class="divider"></li>
+        <li><a href="#!" id="mobile-profile">Mi perfil</a></li>
+        <li><a href="#!" id="mobile-cart">Carrito <span id="cart-count-mobile" class="new badge">0</span></a></li>
+    </ul>
+
+    <section id="inicio" class="container" style="padding-top:18px;">
+        <div style="position: relative;">
+            <div id="hero" class="carousel carousel-slider">
+                <div class="carousel-item" href="#one!">
+                    <img src="img/carrusel 1.png" alt="Maquillaje 1">
+                    <div class="hero-caption">
+                        <h2 class="white-text">Belleza <span class="accent" style="font-weight:700;">Minimalista</span></h2>
+                        <h5 class="light white-text text-lighten-3">Menos es más. Tu mejor versión, naturalmente.</h5>
+                    </div>
+                </div>
+                <div class="carousel-item" href="#two!">
+                    <img src="img/carrusel 2.png" alt="Maquillaje 2">
+                    <div class="hero-caption">
+                        <h2 class="white-text">Fórmulas <span class="accent" style="font-weight:700;">Limpias</span></h2>
+                        <h5 class="light white-text text-lighten-3">Ética y sostenibilidad en cada producto.</h5>
+                    </div>
+                </div>
+                <div class="carousel-item" href="#three!">
+                    <img src="img/carrusel 3.png" alt="Maquillaje 3">
+                    <div class="hero-caption">
+                        <h2 class="white-text">¡Nuevos <span class="accent" style="font-weight:700;">Lanzamientos</span>!</h2>
+                        <h5 class="light white-text text-lighten-3">Descubre los favoritos de la temporada.</h5>
+                    </div>
+                </div>
+            </div>
+
+            <a href="#!" id="prev-slide" class="carousel-control left hide-on-small-only">
+                <i class="material-icons">chevron_left</i>
+            </a>
+            <a href="#!" id="next-slide" class="carousel-control right hide-on-small-only">
+                <i class="material-icons">chevron_right</i>
+            </a>
+        </div>
+    </section>
+
+    <section id="productos" class="section container">
+        <h4 class="centered primary-text"><span class="accent">Productos</span> Destacados</h4>
+
+        <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="maquillaje">Maquillaje</button>
+            <button class="filter-btn" data-filter="best">Best Sellers</button>
+            <button class="filter-btn" data-filter="descuento">Descuentos</button>
+            <button class="filter-btn" data-filter="atencion">Asesoría</button>
+        </div>
+
+        <div class="row" id="product-grid">
+            
+            <div class="col s12 m4 producto maquillaje" data-id="p1" data-price="24.50" data-title="Base Líquida">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light" style="position:relative;">
+                        <img src="img/1.jpg" alt="Base Líquida">
+                        <div class="price-badge">$24.50</div>
+                    </div>
+                    <div class="card-content centered">
+                        <span class="card-title primary-text" style="font-weight:600;">Base Líquida</span>
+                        <p class="muted">Textura ligera y cobertura natural.</p>
+                    </div>
+                    <div class="actions-row">
+                        <button class="btn btn-quick btn-custom waves-effect add-cart" data-id="p1">Añadir</button>
+                        <button class="btn btn-quick white black-text quick-buy waves-effect" data-id="p1">Compra rápida</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col s12 m4 producto best" data-id="p2" data-price="18.00" data-title="Labial Matte">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light" style="position:relative;">
+                        <img src="img/3.jpg" alt="Labial Matte">
+                        <div class="price-badge">$18.00</div>
+                    </div>
+                    <div class="card-content centered">
+                        <span class="card-title primary-text" style="font-weight:600;">Labial Matte</span>
+                        <p class="muted">Color intenso y larga duración.</p>
+                    </div>
+                    <div class="actions-row">
+                        <button class="btn btn-quick btn-custom waves-effect add-cart" data-id="p2">Añadir</button>
+                        <button class="btn btn-quick white black-text quick-buy waves-effect" data-id="p2">Compra rápida</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col s12 m4 producto maquillaje" data-id="p3" data-price="32.00" data-title="Paleta Sombras">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light" style="position:relative;">
+                        <img src="img/sombra.jpg" alt="Paleta Sombras">
+                        <div class="price-badge">$32.00</div>
+                    </div>
+                    <div class="card-content centered">
+                        <span class="card-title primary-text" style="font-weight:600;">Paleta Sombras</span>
+                        <p class="muted">Tonos combinables y suaves.</p>
+                    </div>
+                    <div class="actions-row">
+                        <button class="btn btn-quick btn-custom waves-effect add-cart" data-id="p3">Añadir</button>
+                        <button class="btn btn-quick white black-text quick-buy waves-effect" data-id="p3">Compra rápida</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m4 producto descuento" data-id="p4" data-price="14.00" data-title="Iluminador Glow">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light" style="position:relative;">
+                        <img src="img/ilumi.jpg" alt="Iluminador Glow">
+                        <div class="price-badge">$14.00</div>
+                    </div>
+                    <div class="card-content centered">
+                        <span class="card-title primary-text" style="font-weight:600;">Iluminador Glow</span>
+                        <p class="muted">Brillo natural (en promoción).</p>
+                    </div>
+                    <div class="actions-row">
+                        <button class="btn btn-quick btn-custom waves-effect add-cart" data-id="p4">Añadir</button>
+                        <button class="btn btn-quick white black-text quick-buy waves-effect" data-id="p4">Compra rápida</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m4 producto best" data-id="p5" data-price="20.00" data-title="Rubor Rosé">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light" style="position:relative;">
+                        <img src="img/2.jpg" alt="Rubor Rosé">
+                        <div class="price-badge">$20.00</div>
+                    </div>
+                    <div class="card-content centered">
+                        <span class="card-title primary-text" style="font-weight:600;">Rubor Rosé</span>
+                        <p class="muted">Favorito de nuestras clientas.</p>
+                    </div>
+                    <div class="actions-row">
+                        <button class="btn btn-quick btn-custom waves-effect add-cart" data-id="p5">Añadir</button>
+                        <button class="btn btn-quick white black-text quick-buy waves-effect" data-id="p5">Compra rápida</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m4 producto descuento" data-id="p6" data-price="16.50" data-title="Máscara Volumen+">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light" style="position:relative;">
+                        <img src="img/masca.jpg" alt="Máscara Volumen+">
+                        <div class="price-badge">$16.50</div>
+                    </div>
+                    <div class="card-content centered">
+                        <span class="card-title primary-text" style="font-weight:600;">Máscara Volumen+</span>
+                        <p class="muted">Descuento por tiempo limitado.</p>
+                    </div>
+                    <div class="actions-row">
+                        <button class="btn btn-quick btn-custom waves-effect add-cart" data-id="p6">Añadir</button>
+                        <button class="btn btn-quick white black-text quick-buy waves-effect" data-id="p6">Compra rápida</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m4 producto maquillaje" data-id="p7" data-price="12.75" data-title="Corrector HD">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light" style="position:relative;">
+                        <img src="img/aaaa.png" alt="Corrector HD">
+                        <div class="price-badge">$12.75</div>
+                    </div>
+                    <div class="card-content centered">
+                        <span class="card-title primary-text" style="font-weight:600;">Corrector HD</span>
+                        <p class="muted">Oculta imperfecciones al instante.</p>
+                    </div>
+                    <div class="actions-row">
+                        <button class="btn btn-quick btn-custom waves-effect add-cart" data-id="p7">Añadir</button>
+                        <button class="btn btn-quick white black-text quick-buy waves-effect" data-id="p7">Compra rápida</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m4 producto atencion" data-id="p8" data-price="0.00" data-title="Asesoría VIP">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light" style="position:relative;">
+                        <img src="img/aseso.jpg" alt="Asesoría VIP">
+                        <div class="price-badge">Gratis</div>
+                    </div>
+                    <div class="card-content centered">
+                        <span class="card-title primary-text" style="font-weight:600;">Asesoría VIP</span>
+                        <p class="muted">Reserva tu asesoría personalizada.</p>
+                    </div>
+                    <div class="actions-row">
+                        <button class="btn btn-quick btn-custom waves-effect add-cart" data-id="p8">Añadir</button>
+                        <button class="btn btn-quick white black-text quick-buy waves-effect" data-id="p8">Contactar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col s12 m4 producto best" data-id="p9" data-price="45.00" data-title="Set Profesional">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light" style="position:relative;">
+                        <img src="img/set.jpg" alt="Set Profesional">
+                        <div class="price-badge">$45.00</div>
+                    </div>
+                    <div class="card-content centered">
+                        <span class="card-title primary-text" style="font-weight:600;">Set Profesional</span>
+                        <p class="muted">Edición limitada de brochas Voulé.</p>
+                    </div>
+                    <div class="actions-row">
+                        <button class="btn btn-quick btn-custom waves-effect add-cart" data-id="p9">Añadir</button>
+                        <button class="btn btn-quick white black-text quick-buy waves-effect" data-id="p9">Compra rápida</button>
+                    </div>
+                </div>
+            </div>
+
+        </div> 
+    </section>
+
+    <section id="nosotros" class="section primary-text" style="background-color: var(--accent); color:#fff;">
+        <div class="container">
+            <h5 class="centered" style="color:#fff;">Sobre Voulé</h5>
+            <div class="row" style="margin-top:20px;">
+                <div class="col s12 m6">
+                    <p class="flow-text">
+                        En <strong>Voulé</strong> creemos en la belleza minimalista: productos de **alta calidad** y fórmulas pensadas para resaltar tu mejor versión y una experiencia de compra **simple y elegante**.
+                    </p>
+                </div>
+                <div class="col s12 m6">
+                    <p style="color:rgba(255,255,255,0.8);">
+                        Misión: ayudar a las personas a sentirse seguras con productos efectivos y un diseño cuidado. Nos enfocamos en la sostenibilidad y la transparencia. Visítanos en redes para lanzamientos y promociones exclusivas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contacto" class="section container">
+        <h5 class="centered accent">Contáctanos</h5>
+        <div class="row">
+            <form class="col s12 m8 offset-m2" id="contact-form">
+                <div class="input-field">
+                    <input id="nombre" type="text" required>
+                    <label for="nombre">Nombre</label>
+                </div>
+                <div class="input-field">
+                    <input id="email" type="email" required>
+                    <label for="email">Correo electrónico</label>
+                </div>
+                <div class="input-field">
+                    <textarea id="mensaje" class="materialize-textarea" required></textarea>
+                    <label for="mensaje">Mensaje</label>
+                </div>
+                <div class="centered">
+                    <button class="btn btn-custom waves-effect" type="submit">Enviar mensaje</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer class="center">
+        <div class="container">
+            <p>© <strong>Voulé</strong> 2025 — Todos los derechos reservados.</p>
+            <div>
+                <a href="#" class="white-text"><i class="material-icons">facebook</i></a>
+                <a href="#" class="white-text"><i class="material-icons">instagram</i></a>
+                <a href="#" class="white-text"><i class="material-icons">email</i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <h5>Tu carrito</h5>
+            <div id="cart-items" style="margin-top:12px;"></div>
+            <div class="divider" style="margin:12px 0"></div>
+            <div class="right">
+                <strong>Total: </strong> <span id="cart-total">$0.00</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" id="clear-cart" class="modal-close waves-effect waves-red btn-flat">Vaciar</a>
+            <a href="#!" id="checkout-btn" class="waves-effect waves-light btn btn-custom">Comprar</a>
+        </div>
+    </div>
+
+    <div id="profile-modal" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5 class="primary-text">Mi Perfil</h5>
+            
+            <div class="row">
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col s4"><a class="active primary-text" href="#tab-datos">Datos Personales</a></li>
+                        <li class="tab col s4"><a class="primary-text" href="#tab-historial">Historial</a></li>
+                        <li class="tab col s4"><a class="primary-text" href="#tab-direcciones">Direcciones</a></li>
+                    </ul>
+                </div>
+
+                <div id="tab-datos" class="col s12" style="padding-top:20px;">
+                    <p class="muted">Actualiza tu información básica.</p>
+                    <form id="profile-form">
+                        <div class="input-field">
+                            <input id="user-name" type="text" required>
+                            <label for="user-name">Nombre</label>
+                        </div>
+                        <div class="input-field">
+                            <input id="user-email" type="email" required>
+                            <label for="user-email">Correo electrónico</label>
+                        </div>
+                        <div class="centered" style="margin-top:20px;">
+                            <button class="btn btn-custom waves-effect" type="submit">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="tab-historial" class="col s12" style="padding-top:20px;">
+                    <h6>Pedidos Anteriores (Simulado)</h6>
+                    <ul class="collection">
+                        <li class="collection-item avatar">
+                            <i class="material-icons circle accent">local_mall</i>
+                            <span class="title primary-text">Pedido #V2025-101</span>
+                            <p class="muted">Fecha: 05/10/2025 <br> Total: $42.50</p>
+                            <a href="#!" class="secondary-content primary-text">Ver detalle</a>
+                        </li>
+                        <li class="collection-item avatar">
+                            <i class="material-icons circle accent">local_mall</i>
+                            <span class="title primary-text">Pedido #V2025-087</span>
+                            <p class="muted">Fecha: 18/09/2025 <br> Total: $76.00</p>
+                            <a href="#!" class="secondary-content primary-text">Ver detalle</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="tab-direcciones" class="col s12" style="padding-top:20px;">
+                    <h6>Direcciones Guardadas (Simulado)</h6>
+                    <div class="card-panel grey lighten-3">
+                        <span class="primary-text" style="font-weight:600;">Dirección Principal</span>
+                        <p class="muted" style="margin-top:5px;">Calle Falsa 123, Apto 4B. Ciudad de México. C.P. 01010.</p>
+                        <a href="#!" class="accent" style="font-size:0.9rem;">Editar</a>
+                    </div>
+                    <button class="btn btn-small waves-effect white primary-text" style="margin-top:10px;"><i class="material-icons left">add</i> Nueva Dirección</button>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content">
+            <h5>Compra realizada</h5>
+            <p>¡Gracias por tu compra! .</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-light btn">Cerrar</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        
+        
+        function flyToCartAnimation(button) {
+            const productCard = button.closest('.card');
+            const imageContainer = productCard.querySelector('.card-image');
+            const image = imageContainer ? imageContainer.querySelector('img') : null;
+            const targetCart = document.getElementById('cart-btn');
+
+            if (!image || !targetCart) { return; }
+
+            const flyingImg = document.createElement('img');
+            flyingImg.src = image.src;
+            const startRect = image.getBoundingClientRect();
+            
+            flyingImg.style.cssText = `
+                position: fixed;
+                width: ${startRect.width}px;
+                height: ${startRect.height}px;
+                top: ${startRect.top}px;
+                left: ${startRect.left}px;
+                z-index: 9999;
+                border-radius: 10px;
+                opacity: 1;
+                transition: all 0.9s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            `;
+            document.body.appendChild(flyingImg);
+
+            const cartPosition = targetCart.getBoundingClientRect();
+            const finalTop = cartPosition.top + cartPosition.height / 2;
+            const finalLeft = cartPosition.left + cartPosition.width / 2;
+
+            setTimeout(() => {
+                flyingImg.style.width = '30px';
+                flyingImg.style.height = '30px';
+                flyingImg.style.top = `${finalTop - 15}px`;
+                flyingImg.style.left = `${finalLeft - 15}px`;
+                flyingImg.style.opacity = '0.5';
+                flyingImg.style.transform = 'rotate(360deg)';
+            }, 50);
+
+            setTimeout(() => {
+                flyingImg.remove();
+                targetCart.classList.add('pulse-once');
+                setTimeout(() => targetCart.classList.remove('pulse-once'), 300);
+            }, 950);
+        }
+
+        
+        function showSplashScreen(callback) {
+            const splashScreen = document.getElementById('splash-screen');
+            const splashText = document.getElementById('splash-text');
+
+            if (splashScreen && splashText) {
+                splashScreen.style.display = 'flex'; 
+                splashScreen.style.opacity = '1';
+                
+               
+                setTimeout(() => {
+                    splashText.style.opacity = '1';
+                    splashText.style.transform = 'scale(1)';
+                }, 100); 
+
+                
+                setTimeout(() => {
+                    splashText.style.opacity = '0';
+                    splashText.style.transform = 'scale(0.9)'; 
+                    
+                    splashScreen.style.opacity = '0'; 
+                    
+                   
+                    setTimeout(() => {
+                        splashScreen.style.display = 'none';
+                        if (callback) callback(); 
+                    }, 800); 
+                }, 1800); 
+            }
+        }
+
+        
+        function manageCarouselTextVisibility() {
+            const heroCarousel = document.getElementById('hero');
+            const activeCarouselItem = heroCarousel.querySelector('.carousel-item.active');
+            
+            if (!activeCarouselItem) return;
+
+           
+            heroCarousel.querySelectorAll('.carousel-item').forEach(item => {
+                item.classList.remove('show-overlay');
+            });
+            heroCarousel.querySelectorAll('.hero-caption').forEach(caption => {
+                caption.classList.remove('visible-temp');
+            });
+
+            const captions = activeCarouselItem.querySelectorAll('.hero-caption');
+
+            
+            if (captions.length) {
+                captions.forEach(caption => {
+                    caption.classList.add('visible-temp');
+                });
+                activeCarouselItem.classList.add('show-overlay');
+            }
+
+           
+            setTimeout(() => {
+               
+                if (!heroCarousel.matches(':hover')) {
+                    if (captions.length) {
+                        captions.forEach(caption => {
+                            caption.classList.remove('visible-temp');
+                        });
+                        activeCarouselItem.classList.remove('show-overlay');
+                    }
+                }
+            }, 5000); 
+        }
+
+        // --- 4. LÓGICA DE CARRITO Y APP (FUERA NO TOQUEN ) ---
+        
+        const products = {};
+        document.querySelectorAll('.producto').forEach(el => {
+            const id = el.dataset.id;
+            products[id] = {
+                id,
+                title: el.dataset.title || el.querySelector('.card-title')?.innerText || 'Producto',
+                price: parseFloat(el.dataset.price || 0),
+                img: el.querySelector('img')?.src || ''
+            };
+        });
+        const CART_KEY = 'voule_cart_v1';
+
+        function loadCart(){ try { const raw = localStorage.getItem(CART_KEY); return raw ? JSON.parse(raw) : {}; } catch(e){ return {}; } }
+        function getCartItemsArray(){ const cart = loadCart(); return Object.values(cart); }
+        function getCartCount(){ return getCartItemsArray().reduce((s,i)=> s + (i.qty||0),0); }
+        function getCartTotal(){ return getCartItemsArray().reduce((s,i)=> s + (i.qty||0) * (parseFloat(i.price)||0),0); }
+        function formatPrice(value){ return '$' + Number(value).toFixed(2); }
+
+        function saveCart(cart){
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            refreshCartUI();
+        }
+        function addToCart(id, qty=1){
+            const cart = loadCart();
+            if(!cart[id]) cart[id] = { ...products[id], qty:0 };
+            cart[id].qty += qty;
+            if(cart[id].qty < 0) cart[id].qty = 0;
+            saveCart(cart);
+            M.toast({html: `<span>Añadido: ${products[id].title}</span>`});
+        }
+        function removeFromCart(id){ const cart = loadCart(); if(cart[id]) delete cart[id]; saveCart(cart); }
+        function updateQuantity(id, qty){ const cart = loadCart(); if(!cart[id]) return; cart[id].qty = Math.max(0, parseInt(qty) || 0); if(cart[id].qty === 0) delete cart[id]; saveCart(cart); }
+        function clearCart(){ localStorage.removeItem(CART_KEY); refreshCartUI(); }
+
+
+        function refreshCartUI(){
+            const count = getCartCount();
+            document.getElementById('cart-count').innerText = count;
+            document.getElementById('cart-count-mobile').innerText = count;
+
+            const container = document.getElementById('cart-items');
+            container.innerHTML = '';
+            const items = getCartItemsArray();
+            if(items.length === 0){
+                container.innerHTML = '<p class="muted">Tu carrito está vacío.</p>';
+            } else {
+                items.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'cart-row row valign-wrapper';
+                    row.style.marginBottom = '12px';
+                    row.innerHTML = `
+                        <div class="col s3"><img src="${item.img}" alt="${item.title}" style="width:64px;height:64px;object-fit:cover;border-radius:8px;"></div>
+                        <div class="col s5"><div style="font-weight:600">${item.title}</div><div class="muted" style="font-size:0.95rem">${formatPrice(item.price)}</div></div>
+                        <div class="col s4 right-align">
+                            <div style="display:inline-flex;align-items:center;gap:6px;">
+                                <a href="#!" class="waves-effect btn-flat qty-decr" data-id="${item.id}"><i class="material-icons">remove</i></a>
+                                <span style="min-width:34px;display:inline-block;text-align:center">${item.qty}</span>
+                                <a href="#!" class="waves-effect btn-flat qty-incr" data-id="${item.id}"><i class="material-icons">add</i></a>
+                            </div>
+                            <div style="margin-top:8px;"><a href="#!" class="waves-effect red-text remove-item" data-id="${item.id}">Eliminar</a></div>
+                        </div>
+                    `;
+                    container.appendChild(row);
+                });
+            }
+            document.getElementById('cart-total').innerText = formatPrice(getCartTotal());
+        }
+
+        function initApp(){
+           
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filter = btn.dataset.filter;
+                    document.querySelectorAll('#product-grid .producto').forEach(prod => {
+                        prod.style.display = (filter === 'all' || prod.classList.contains(filter)) ? 'block' : 'none';
+                    });
+                });
+            });
+
+            
+            document.querySelectorAll('.add-cart').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = btn.dataset.id;
+                    flyToCartAnimation(btn); 
+                    addToCart(id, 1);
+                });
+            });
+
+         
+            document.querySelectorAll('.quick-buy').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = btn.dataset.id;
+                    const prod = products[id];
+                    if(prod && prod.price === 0){
+                        M.Modal.getInstance(document.querySelector('#profile-modal')).open();
+                        M.toast({html: 'Abre formulario de contacto para asesoría.'});
+                        return;
+                    }
+                    flyToCartAnimation(btn);
+                    addToCart(id,1);
+                    M.Modal.getInstance(document.getElementById('cart-modal')).open();
+                });
+            });
+
+            
+            document.getElementById('cart-btn').addEventListener('click', () => { M.Modal.getInstance(document.getElementById('cart-modal')).open(); });
+            document.getElementById('mobile-cart').addEventListener('click', () => { M.Modal.getInstance(document.getElementById('cart-modal')).open(); });
+            document.getElementById('profile-btn').addEventListener('click', () => { M.Modal.getInstance(document.getElementById('profile-modal')).open(); });
+            document.getElementById('mobile-profile').addEventListener('click', () => { M.Modal.getInstance(document.getElementById('profile-modal')).open(); });
+
+            
+            document.getElementById('cart-modal').addEventListener('click', (e) => {
+                if(e.target.closest('.qty-incr')){
+                    const id = e.target.closest('[data-id]').dataset.id;
+                    addToCart(id,1);
+                }
+                if(e.target.closest('.qty-decr')){
+                    const id = e.target.closest('[data-id]').dataset.id;
+                    updateQuantity(id, Math.max(0, loadCart()[id]?.qty - 1 || 0));
+                }
+                if(e.target.closest('.remove-item')){
+                    const id = e.target.closest('[data-id]').dataset.id;
+                    removeFromCart(id);
+                }
+            });
+
+          
+            document.getElementById('clear-cart').addEventListener('click', () => { clearCart(); M.toast({html: 'Carrito vaciado'}); });
+
+            
+            document.getElementById('checkout-btn').addEventListener('click', () => {
+                const total = getCartTotal();
+                if(total === 0){ M.toast({html: 'Tu carrito está vacío.'}); return; }
+                clearCart();
+                M.Modal.getInstance(document.getElementById('cart-modal')).close(); 
+                M.Modal.getInstance(document.getElementById('checkout-modal')).open(); 
+            });
+            
+            
+            document.getElementById('contact-form').addEventListener('submit', (e) => { e.preventDefault(); M.toast({html: `Gracias. Mensaje enviado (simulado).`}); e.target.reset(); });
+            document.getElementById('profile-form').addEventListener('submit', (e) => { e.preventDefault(); M.Modal.getInstance(document.getElementById('profile-modal')).close(); M.toast({html: 'Perfil guardado localmente (simulado).'}); });
+
+
+            refreshCartUI();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            showSplashScreen(); 
+            
+            M.AutoInit();
+            const fab = document.querySelectorAll('.fixed-action-btn');
+            M.FloatingActionButton.init(fab, { direction: 'left', hoverEnabled: true });
+            
+          
+            const profileModalElement = document.getElementById('profile-modal');
+            if (profileModalElement) {
+                const tabsElement = profileModalElement.querySelector('.tabs');
+                M.Tabs.init(tabsElement);
+            }
+            
+           
+            document.querySelectorAll('a[href="guia-tecnica.html"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault(); 
+                    const targetUrl = this.href;
+
+                    showSplashScreen(() => {
+                        window.location.href = targetUrl; 
+                    });
+                });
+            });
+
+            
+            let heroCarouselInstance;
+            const heroCarousel = document.getElementById('hero');
+            if (heroCarousel) {
+                heroCarouselInstance = M.Carousel.init(heroCarousel, {
+                    fullWidth: true, 
+                    indicators: true, 
+                    duration: 300,
+                });
+                
+                
+                setTimeout(manageCarouselTextVisibility, 100); 
+            }
+
+            
+            const prevButton = document.getElementById('prev-slide');
+            const nextButton = document.getElementById('next-slide');
+
+            if (heroCarouselInstance) {
+                
+                if (prevButton) {
+                    prevButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        heroCarouselInstance.prev();
+                        manageCarouselTextVisibility(); 
+                    });
+                }
+                if (nextButton) {
+                    nextButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        heroCarouselInstance.next();
+                        manageCarouselTextVisibility(); 
+                    });
+                }
+            }
+            
+            
+            initApp();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Voulé — Guía Técnica y UX/UI</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root{
+            --bg: #F4F4F4;
+            --primary: #594D48;
+            --dark: #2A2A2A;
+            --accent: #D6B4A1;
+            --secondary-accent: #A89589;
+        }
+
+       
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--dark); }
+        .container { max-width: 1200px; }
+        .accent { color: var(--accent) !important; }
+        .primary-text { color: var(--primary); }
+        .centered { text-align:center; }
+        nav { background: var(--primary); box-shadow: none; }
+
+        
+        .project-link {
+            background-color: #fff;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .project-link:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .project-link a {
+            padding: 18px 20px !important;
+            display: flex;
+            align-items: center;
+            color: var(--primary) !important;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .project-link i { margin-right: 15px; color: var(--accent); font-size: 1.8rem; }
+        
+      
+        article {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex; 
+            flex-direction: column; 
+        }
+        article h5 {
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        article ul {
+            list-style: disc;
+            margin-left: 20px;
+            padding-left: 0;
+            margin-bottom: 15px; 
+        }
+        
+       
+        .code-container {
+            position: relative;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+        .code-block {
+            background: #eee; 
+            padding: 15px; 
+            border-radius: 8px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 0; 
+        }
+       
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .copy-btn:hover {
+            background: var(--primary);
+        }
+
+        
+        .article-image {
+            max-width: 100%; 
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-top: 25px; 
+            display: block; 
+            margin-left: auto;
+            margin-right: auto;
+            flex-shrink: 0; 
+        }
+
+        @media (min-width: 768px) {
+            article.with-image { 
+                flex-direction: row; 
+                justify-content: space-between; 
+                align-items: flex-start; 
+            }
+            article.with-image .text-content {
+                flex: 1; 
+                padding-right: 30px; 
+            }
+            article.with-image .article-image {
+                max-width: 45%; 
+                margin-top: 0; 
+            }
+        }
+        
+       
+        .color-block {
+            padding:10px; border-radius:4px; margin-bottom:5px;
+            font-weight: 500;
+        }
+        .color-block.dark-bg {
+            color: white; 
+        }
+        .color-block.light-bg {
+            color: var(--dark); 
+        }
+        
+        
+        .article-btn {
+            background-color: var(--secondary-accent);
+            color: #fff !important;
+            margin-top: 15px;
+        }
+        .article-btn:hover {
+            background-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-wrapper container">
+            <a href="index.html" class="brand-logo white-text">
+                <span style="font-size:1.25rem">Voul<span class="accent">é</span></span>
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="index.html" class="white-text"><i class="material-icons left">arrow_back</i> Volver a la Tienda</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <section id="guia-tecnica-header" class="section container centered" style="padding-top:30px;">
+        <h3 class="primary-text" data-aos="fade-down"><i class="material-icons accent" style="font-size:3rem; vertical-align:middle; margin-right:10px;">analytics</i> Panel de Control del Proyecto</h3>
+        <p class="flow-text muted" data-aos="fade-up" data-aos-delay="200">
+            Documentación técnica y de diseño para la plataforma Voulé, enfocada en la Experiencia de Usuario (UX) y la Interfaz de Usuario (UI).
+        </p>
+    </section>
+
+    <div class="container" style="padding-bottom: 50px;">
+        
+        <div class="row" style="margin-top:40px;">
+            <div class="col s12 m10 offset-m1">
+                <h5 class="primary-text" style="margin-bottom: 20px;" data-aos="fade-right">Índice de Documentación</h5>
+                
+                <div class="project-link z-depth-1 hoverable" data-aos="fade-up" data-aos-delay="100"><a href="#guia-sitemap"><i class="material-icons">folder_open</i> 1. Site Map (Arquitectura de la Información)</a></div>
+                <div class="project-link z-depth-1 hoverable" data-aos="fade-up" data-aos-delay="200"><a href="#guia-estilo"><i class="material-icons">palette</i> 2. Guía de Estilo y Branding</a></div>
+                <div class="project-link z-depth-1 hoverable" data-aos="fade-up" data-aos-delay="300"><a href="#guia-prototipo-web"><i class="material-icons">web</i> 3. Prototipo Web y Diseño UI</a></div>
+                <div class="project-link z-depth-1 hoverable" data-aos="fade-up" data-aos-delay="400"><a href="#guia-prototipo-movil"><i class="material-icons">phone_android</i> 4. Prototipo Móvil (Diseño Responsive)</a></div>
+                <div class="project-link z-depth-1 hoverable" data-aos="fade-up" data-aos-delay="500"><a href="#guia-flujo"><i class="material-icons">trending_flat</i> 5. Flujo de Interacción Crítica</a></div>
+                <div class="project-link z-depth-1 hoverable" data-aos="fade-up" data-aos-delay="600"><a href="#guia-persona"><i class="material-icons">person_pin</i> 6. Buyer Persona de Voulé</a></div>
+                <div class="project-link z-depth-1 hoverable" data-aos="fade-up" data-aos-delay="700"><a href="#guia-voz"><i class="material-icons">record_voice_over</i> 7. Voz y Tono de la Marca</a></div>
+                <div class="project-link z-depth-1 hoverable" data-aos="fade-up" data-aos-delay="800"><a href="#guia-a11y"><i class="material-icons">accessibility_new</i> 8. Pautas de Accesibilidad (A11y)</a></div>
+                
+            </div>
+        </div>
+        
+        <hr style="margin: 40px 0; border-top: 1px solid #ddd;">
+
+        <article id="guia-sitemap" data-aos="fade-up">
+            <h5 class="primary-text">1. Site Map (Arquitectura de la Información)</h5>
+            <p>Define la estructura lógica y la jerarquía de las páginas, asegurando que el contenido sea accesible (UX).</p>
+            
+            <div class="code-container">
+                <pre class="code-block" id="sitemap-code">
+Inicio (Homepage)
+├── Productos (Catálogo)
+│   ├── Maquillaje (Filtro)
+│   ├── Best Sellers (Filtro)
+│   └── (Página de Detalle de Producto - Necesaria para Ecommerce real)
+├── Nosotros (Historia y Misión)
+├── Contacto (Formulario)
+├── Guía Técnica (Panel de Control)
+└── Carrito / Checkout / Perfil (Modales y Lógica)
+                </pre>
+                <button class="copy-btn" onclick="copyCode('sitemap-code', this)">Copiar Código</button>
+            </div>
+        </article>
+        
+        <article id="guia-estilo" data-aos="fade-up">
+            <h5 class="primary-text">2. Guía de Estilo y Branding</h5>
+            <p>Este documento define los elementos visuales clave para mantener la consistencia (UI) y la identidad minimalista de la marca Voulé.</p>
+            
+            <div class="row">
+                <div class="col s12 m6">
+                    <h6>Paleta de Colores</h6>
+                    
+                    <div class="color-block dark-bg" style="background:var(--primary);">
+                        Primario (Headers, Nav): <br> #594D48 (Marrón Oscuro Elegante)
+                    </div>
+                    
+                    <div class="color-block light-bg" style="background:var(--accent);">
+                        Acento (Llamadas a la acción): <br> #D6B4A1 (Rosa Pálido Terroso)
+                    </div>
+                    
+                    <div class="color-block dark-bg" style="background:var(--secondary-accent);">
+                        Secundario(Botones, Filtros): <br> #A89589 (Marrón Grisáceo)
+                    </div>
+
+                    <div class="color-block light-bg" style="background:var(--bg); border: 1px solid #ddd;">
+                        Fondo (Body, Secciones): <br> #F4F4F4 (Gris Claro Suave)
+                    </div>
+                </div>
+
+                <div class="col s12 m6">
+                    <h6>Tipografía (Fuente: Poppins)</h6>
+                    
+                    <div class="card-panel grey lighten-4" style="padding: 15px;">
+                        <h4 style="font-weight:700; margin-top: 0; margin-bottom: 10px; color: var(--primary);">H4 Título Principal</h4>
+                        <h6 style="font-weight:600; margin-bottom: 8px; color: var(--dark);">H6 Subtítulo (Semibold)</h6>
+                        <p style="font-weight:300; margin-bottom: 5px;">
+                            Párrafo (Light 300) - La belleza reside en la simplicidad.
+                        </p>
+                        <p style="font-weight:500;">
+                            Botones/Links (Medium 500) - Acciones clave.
+                        </p>
+                    </div>
+                    
+                    <p class="muted">
+                        **Uso de la Tipografía:** Priorizar el peso 300 (Light) para grandes bloques de texto (minimalismo) y 600/700 (Semibold/Bold) solo para impacto y CTA (Call to Action).
+                    </p>
+                </div>
+            </div>
+
+            <h6 class="primary-text" style="border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 20px;">Componentes Visuales</h6>
+            <div class="row">
+                <div class="col s12 m6">
+                    <p><strong>Radio de Borde:</strong> <span class="muted">12px a 14px</span> (Suave y moderno)</p>
+                    <div style="width: 80px; height: 80px; background: var(--accent); border-radius: 12px; display: inline-block;"></div>
+                </div>
+                <div class="col s12 m6">
+                    <p><strong>Estilo de Sombra:</strong> <span class="muted">Sutil y elevada</span></p>
+                    <div class="card-panel" style="box-shadow: 0 8px 24px var(--card-shadow); margin-top: 0; display: inline-block;">
+                        Sombra de Tarjeta (Productos)
+                    </div>
+                </div>
+            </div>
+        </article>
+        
+        <article id="guia-prototipo-web" class="with-image" data-aos="fade-up">
+            <div class="text-content">
+                <h5 class="primary-text">3. Prototipo Web y Diseño UI</h5>
+                <p>Se utiliza un diseño de alta fidelidad. Las decisiones clave de UI incluyen:</p>
+                <ul>
+                    <li>Tarjetas de Producto: Uso de sombreado sutil y animación en hover para indicar interactividad.</li>
+                    <li>Filtros: Barra de filtros como botones que cambian de estado con un color de acento claro.</li>
+                    <li>Navegación: Uso de un Floating Action Button (FAB) en la esquina inferior derecha para accesos rápidos.</li>
+                </ul>
+                <a href="#!" class="btn waves-effect article-btn"><i class="material-icons left">open_in_new</i> Ver Prototipo Interactivo</a>
+            </div>
+            <img src="img/prototipo-web-referencia.png" alt="Prototipo Web" class="article-image">
+        </article>
+        
+        <article id="guia-prototipo-movil" class="with-image" data-aos="fade-up">
+            <div class="text-content">
+                <h5 class="primary-text">4. Prototipo Móvil (Diseño Responsive)</h5>
+                <p>Se garantiza una experiencia de una sola columna. Claves de UX en móvil:</p>
+                <ul>
+                    <li>Menú: Se transforma en un menú lateral (Sidenav) con el icono de hamburguesa, liberando espacio en la cabecera.</li>
+                    <li>Contenido:Las tarjetas pasan a una columna para facilitar la interacción táctil.</li>
+                    <li>Funcionalidad Crítica: Los botones de "Carrito" y "Perfil" se mantienen visibles en el navbar.</li>
+                </ul>
+                 <a href="#!" class="btn waves-effect article-btn"><i class="material-icons left">open_in_new</i> Ver Prototipo Móvil</a>
+            </div>
+            <img src="img/prototipo-movil-referencia.png" alt="Prototipo Móvil" class="article-image">
+        </article>
+        
+        <article id="guia-flujo" data-aos="fade-up">
+            <h5 class="primary-text">5. Flujo de Interacción Crítica</h5>
+            <p>El flujo crítico de compra se ha optimizado para ser lo más corto posible (UX):</p>
+            <ol>
+                <li>Descubrimiento: Usuario ve un producto.</li>
+                <li>Acción Rápida: Clic en "Añadir al carrito".</li>
+                <li>Revisión: Modal de carrito (No se recarga la página).</li>
+                <li>Conversión: Clic en "Comprar" (Lleva al modal de confirmación simulado).</li>
+            </ol>
+            <p class="muted">Esto minimiza los pasos para la conversión y reduce la fricción en el proceso de pago.</p>
+            <img src="img/flujo-interaccion.png" alt="Diagrama de Flujo de Interacción de Compra" class="article-image" style="max-width: 70%;">
+        </article>
+        
+        <article id="guia-persona" data-aos="fade-up">
+            <h5 class="primary-text">6. Buyer Persona de Voulé</h5>
+            <p>El diseño se basó en el perfil de **Sofía, 28 años, Diseñadora Gráfica**, quien valora la limpieza y la calidad.</p>
+            <div class="row">
+                <div class="col s12 m6">
+                    <h6>Motivaciones (UX)</h6>
+                    <ul>
+                        <li>Diseño limpio y sin sobrecarga de información.</li>
+                        <li>Transparencia en ingredientes.</li>
+                    </ul>
+                </div>
+                <div class="col s12 m6">
+                    <h6>Impacto en el Diseño (UI)</h6>
+                    <ul>
+                        <li>Uso de la tipografía Poppins y paleta de colores terrosos (elegancia).</li>
+                        <li>Microinteracciones sutiles pero rápidas (feedback instantáneo).</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+        
+        <article id="guia-voz" data-aos="fade-up">
+            <h5 class="primary-text">7. Voz y Tono de la Marca (Content Strategy)</h5>
+            <p>La voz de Voulé es un reflejo de su estética: elegante, concisa y honesta.</p>
+            <div class="row">
+                <div class="col s12 m6">
+                    <h6>Voz: Minimalista y Confiable</h6>
+                    <ul>
+                        <li>Elegante y Calma:** Evita la jerga y la euforia excesiva.</li>
+                        <li>Honesta: Enfocada en la calidad y la transparencia.</li>
+                        <li>Concisa: El mensaje es directo, respetando el tiempo del usuario (UX).</li>
+                    </ul>
+                </div>
+                <div class="col s12 m6">
+                    <h6>Ejemplo de Microcopy</h6>
+                    <blockquote style="border-left: 3px solid var(--accent);">
+                        <p>**Mensaje de Éxito:** "¡Tu pedido ha sido un éxito! Pronto estará en camino."</p>
+                        <p>**CTA de Carrito:** "Comprar ahora" o "Finalizar pedido."</p>
+                        <p>**Error de Validación:** "Por favor, verifica tu correo."</p>
+                    </blockquote>
+                </div>
+            </div>
+        </article>
+        
+        <article id="guia-a11y" data-aos="fade-up">
+            <h5 class="primary-text">8. Pautas de Accesibilidad (A11y)</h5>
+            <p>Garantizar la usabilidad del sitio para todos los usuarios (WCAG 2.1 AA).</p>
+            <div class="row">
+                <div class="col s12 m6">
+                    <h6>Usabilidad de Teclado</h6>
+                    <ul>
+                        <li>**Focus States:** Todos los elementos interactivos (`a`, `button`, `input`) deben tener un estado de enfoque visible (el anillo azul de Materialize es suficiente).</li>
+                        <li>**Navegación:** El orden de tabulación debe ser lógico y coherente (de izquierda a derecha/de arriba a abajo).</li>
+                    </ul>
+                </div>
+                <div class="col s12 m6">
+                    <h6>Contraste y Semántica</h6>
+                    <ul>
+                        <li>Contraste: Los pares de color (ej. Texto negro sobre Fondo Acento) cumplen un ratio 4.5:1.</li>
+                        <li>Semántica:Uso correcto de tags (`h1` a `h6`, `nav`, `footer`) para lectores de pantalla.</li>
+                        <li>Imágenes: Todas las imágenes de producto y banners requieren atributos `alt` descriptivos.</li>
+                    </ul>
+                </div>
+            </div>
+        </article>
+
+    </div> 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        
+        function copyCode(elementId, button) {
+            const codeElement = document.getElementById(elementId);
+            const code = codeElement.innerText;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.innerText;
+                button.innerText = '¡Copiado!';
+                
+                setTimeout(() => {
+                    button.innerText = originalText;
+                }, 1500);
+                
+            }).catch(err => {
+                console.error('Error al copiar el texto: ', err);
+                M.toast({html: 'Error al copiar el texto.', classes: 'red darken-2'});
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            M.AutoInit();
+            AOS.init({ duration: 1000, once: true, easing: 'ease-in-out' });
+        });
+    </script>
+</body>
+</html>
